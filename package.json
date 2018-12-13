@@ -1,0 +1,19 @@
+{
+  "name": "grimsi.de",
+  "version": "1.0.0",
+  "description": "my personal website",
+  "main": "index.html",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "sass": "^1.15.2"
+  },
+  "scripts": {
+    "compile": "sass --watch scss:css",
+    "start": "sass --update scss:css && http-server"
+  },
+  "author": "",
+  "license": "ISC"
+}
