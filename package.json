@@ -8,12 +8,16 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "sass": "^1.15.2"
+    "sass": "^1.15.2",
+    "typescript": "^3.2.2"
   },
   "scripts": {
-    "compile": "sass --watch scss:css",
-    "start": "sass --update scss:css && http-server"
+    "compile-scss-watch": "sass --watch scss/main.scss:app/main.css --style compressed",
+    "compile-scss": "sass --update scss/main.scss:app/main.css --style compressed",
+    "compile-typescript": "tsc --outFile app/main.js",
+    "start-http-server": "http-server",
+    "start": "npm run compile-scss && npm run compile-typescript && npm run start-http-server"
   },
   "author": "",
-  "license": "ISC"
+  "license": "DBADL"
 }
