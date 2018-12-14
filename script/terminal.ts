@@ -23,76 +23,9 @@ function setTestText(): void {
             "\n" +
             "*** Neustart des Systems erforderlich ***\n" +
             "Last login: Thu Dec 13 19:33:50 2018 from 87.183.54.156\n" +
-            "grimsi@v22017125440758296:~$\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n" +
-            "test\n";
+            "grimsi@v22017125440758296:~$\n";
+        setInterval(() => {
+            terminal.innerText += "test\n";
+        }, 250);
     }
 }
