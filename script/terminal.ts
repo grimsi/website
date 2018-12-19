@@ -1,4 +1,4 @@
-window.onload = () => { setTestText() };
+window.addEventListener("load", setTestText, false);
 
 function setTestText(): void {
     const terminal: HTMLElement | null = document.getElementById("terminal");
