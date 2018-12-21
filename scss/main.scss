@@ -25,11 +25,13 @@ html, body {
 #terminal{
   padding: 10px;
   font-family: "Courier New", monospace;
+  white-space: pre;
 }
 
 #bootscreen{
   position: fixed;
   overflow: hidden;
+  pointer-events: none;
   width: 100vw;
   height: 100vh;
   display: flex;
