@@ -1,8 +1,9 @@
 import {TerminalService} from "./TerminalService";
-import {Command} from "../struct/command";
+import {Command} from "../struct/Command";
 import {cat} from "../commands/cat";
 import {help} from "../commands/help";
 import {clear} from "../commands/clear";
+import {reboot} from "../commands/reboot";
 
 export class CommandHandlerService {
 
@@ -40,6 +41,7 @@ export class CommandHandlerService {
     public static registerCommands(): void {
         new help();
         new clear();
+        new reboot();
         new cat();
     }
 }

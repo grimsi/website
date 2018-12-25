@@ -1,4 +1,4 @@
-import {Command} from "../struct/command";
+import {Command} from "../struct/Command";
 import {TerminalService} from "../services/TerminalService";
 import {CommandHandlerService} from "../services/CommandHandlerService";
 
