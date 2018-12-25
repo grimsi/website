@@ -1,8 +1,10 @@
-class KeyEvent{
-    private key: Key;
-    private action: () => {};
+import {Key} from "../enum/Key";
 
-    constructor(key: Key, event: () => {}){
+export class KeyEvent{
+    private key: Key;
+    private action: Function;
+
+    constructor(key: Key, event: Function){
         this.key = key;
         this.action = event;
     }

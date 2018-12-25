@@ -1,4 +1,4 @@
-enum Key {
+export enum Key {
     ENTER = 'Enter',
     ARROW_UP = 'ArrowUp',
     ARROW_DOWN = 'ArrowDown',

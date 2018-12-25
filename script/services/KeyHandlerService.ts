@@ -1,20 +1,32 @@
-class KeyHandlerService{
+import {KeyEvent} from "../struct/KeyEvent";
+import {Key} from "../enum/Key";
 
-    private terminal: HTMLElement | null = document.getElementById('terminal');
+export class KeyHandlerService{
+
     private keyEvents: KeyEvent[] = [];
 
-    constructor(){
-        if(this.terminal){
-            this.terminal.addEventListener('keyDown', this.handleKeyPress);
+    private static instance: KeyHandlerService;
+
+    constructor() {
+        if (KeyHandlerService.instance) {
+            return KeyHandlerService.instance;
         }
+        KeyHandlerService.instance = this;
     }
 
-    public registerKey (key: Key, action: () => {}): void{
+    public addEventListener(element: HTMLElement): void {
+        const _this = this;
+        element.addEventListener('keydown', function(e){
+            _this.handleKeyPress(<KeyboardEvent> e);
+        }, true);
+    }
+
+    public registerKey (key: Key, action: Function): void {
         const keyEvent: KeyEvent = new KeyEvent(key, action);
         this.keyEvents.push(keyEvent);
     }
 
-    private handleKeyPress (event: KeyboardEvent){
+    private handleKeyPress (event: KeyboardEvent) {
         this.keyEvents.forEach((k: KeyEvent) => {
             if(k.getKey() === event.code){
                 k.triggerAction();

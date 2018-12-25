@@ -1,0 +1,28 @@
+.terminalInput {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+input {
+  background: none;
+  color: white;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  border: none;
+  margin: 0;
+  padding: 0;
+
+  &:focus{
+    outline: none;
+  }
+}
+
+.commandInput{
+  flex-grow: 1;
+}
+
+p{
+  margin: 0;
+  padding: 0;
+}
