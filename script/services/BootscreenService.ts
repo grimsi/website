@@ -12,7 +12,7 @@ export class BootscreenService{
         const bootscreen: HTMLElement | null = document.getElementById("bootscreen");
         if(bootscreen){
             setTimeout(() => {
-                bootscreen.style.display = "none";
+                if(bootscreen.parentNode) bootscreen.parentNode.removeChild(bootscreen);
                 }, (this.utilityService.random(3, 5) * 1000));
         }
     }
