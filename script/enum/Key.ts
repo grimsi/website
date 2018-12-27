@@ -1,7 +1,7 @@
 export enum Key {
-    ENTER = 'Enter',
-    ARROW_UP = 'ArrowUp',
-    ARROW_DOWN = 'ArrowDown',
-    TABULATOR = 'Tab',
-    ESCAPE = 'Escape'
+    ENTER = 13,
+    ARROW_UP = 38,
+    ARROW_DOWN = 40,
+    TABULATOR = 9,
+    ESCAPE = 27
 }

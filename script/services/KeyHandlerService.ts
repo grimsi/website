@@ -28,7 +28,7 @@ export class KeyHandlerService{
 
     private handleKeyPress (event: KeyboardEvent) {
         this.keyEvents.forEach((k: KeyEvent) => {
-            if(k.getKey() === event.code){
+            if(k.getKey() === event.keyCode){
                 k.triggerAction();
             }
         });
