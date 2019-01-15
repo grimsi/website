@@ -4,6 +4,7 @@ import {cat} from "../commands/cat";
 import {help} from "../commands/help";
 import {clear} from "../commands/clear";
 import {reboot} from "../commands/reboot";
+import {ls} from "../commands/ls";
 
 export class CommandHandlerService {
 
@@ -21,13 +22,15 @@ export class CommandHandlerService {
     }
 
     public executeCommand(cmd: string): void {
-        const c: number = CommandHandlerService.commands.map(function(c: Command) { return c.getCommand(); }).indexOf(cmd);
-        if(c !== -1){
-            CommandHandlerService.commands[c].execute();
-        }else {
-            TerminalService.output('command \'' + cmd + '\' not found. For help use \'help\'.');
+        if(cmd.length > 0){
+            const c: number = CommandHandlerService.commands.map(function(c: Command) { return c.getCommand(); }).indexOf(cmd);
+            if(c !== -1){
+                CommandHandlerService.commands[c].execute();
+            }else {
+                TerminalService.output('command \'' + cmd + '\' not found. For help use \'help\'.');
+            }
+            this.terminalService.afterExecuteCommand();
         }
-        this.terminalService.afterExecuteCommand();
     }
 
     public static registerCommand(command: Command){
@@ -43,5 +46,6 @@ export class CommandHandlerService {
         new clear();
         new reboot();
         new cat();
+        new ls();
     }
 }

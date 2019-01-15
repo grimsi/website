@@ -2,8 +2,6 @@ import {UtilityService} from "./UtilityService";
 
 export class BootscreenService{
 
-    private utilityService = new UtilityService();
-
      public init(): void{
         this.startBootSequence();
     }
@@ -13,7 +11,7 @@ export class BootscreenService{
         if(bootscreen){
             setTimeout(() => {
                 if(bootscreen.parentNode) bootscreen.parentNode.removeChild(bootscreen);
-                }, (this.utilityService.random(3, 5) * 1000));
+                }, (UtilityService.random(3, 5) * 1000));
         }
     }
 }

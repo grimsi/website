@@ -4,7 +4,6 @@ import {UtilityService} from "./UtilityService";
 export class TerminalService {
 
     private keyHandlerService = new KeyHandlerService();
-    private utilityService = new UtilityService();
 
     private static terminal: HTMLElement | null = document.getElementById('terminal');
     private commandCount: number = 0;
@@ -99,10 +98,10 @@ export class TerminalService {
     }
 
     private getPerformanceString(): string{
-        return "System load:\t" + this.utilityService.random(0, 1, 2) + "\t\t\tProcesses:\t\t" + this.utilityService.random(0,500) + "\n" +
-            "Usage of /:\t" + this.utilityService.random(50,100, 0) + "% of " + this.utilityService.random(256,1024, 1) + "GB\t\tUsers logged in:\t" + this.utilityService.random(1, 5) + "\n" +
-            "Memory usage:\t" + this.utilityService.random(0,100) + "%\t\t\tIP address for ens3:\t187.58.57.246\n" +
-            "Swap usage:\t" + this.utilityService.random(0,10) + "%\t\t\tIP address for docker0:\t172.10.0.1\n";
+        return "System load:\t" + UtilityService.random(0, 1, 2) + "\t\t\tProcesses:\t\t" + UtilityService.random(0,500) + "\n" +
+            "Usage of /:\t" + UtilityService.random(50,100, 0) + "% of " + UtilityService.random(256,1024, 1) + "GB\t\tUsers logged in:\t" + UtilityService.random(1, 5) + "\n" +
+            "Memory usage:\t" + UtilityService.random(0,100) + "%\t\t\tIP address for ens3:\t187.58.57.246\n" +
+            "Swap usage:\t" + UtilityService.random(0,10) + "%\t\t\tIP address for docker0:\t172.10.0.1\n";
     }
 
     private getCommand(commandNumber: number): string {
