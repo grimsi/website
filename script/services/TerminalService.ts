@@ -27,6 +27,13 @@ export class TerminalService {
         if(TerminalService.terminal) TerminalService.terminal.innerHTML = '';
     }
 
+    public setInputLineText(text: string): void {
+        let currentInputLine: HTMLInputElement | null = <HTMLInputElement> document.getElementById("command_" + this.commandCount);
+        if(currentInputLine){
+            currentInputLine.value = text;
+        }
+    }
+
     public afterExecuteCommand(): void {
         this.setCommandInputReadOnly();
         this.commandCount++;
@@ -56,6 +63,12 @@ export class TerminalService {
             this.keyHandlerService.addEventListener(newLineInput);
             newLineInput.id = "command_" + this.commandCount;
             newLineInput.className= 'commandInput';
+            /* prevent red underline */
+            newLineInput.setAttribute("autocomplete", "off");
+            newLineInput.setAttribute("autocorrect", "off");
+            newLineInput.setAttribute("autocapitalize", "off");
+            newLineInput.setAttribute("spellcheck", "false");
+
 
             newLineElement.append(newLineUsername, newLineInput);
             TerminalService.terminal.append(newLineElement);

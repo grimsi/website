@@ -22,14 +22,27 @@ export class CommandHandlerService {
     }
 
     public executeCommand(cmd: string): void {
+        let terminalService: TerminalService = this.terminalService;
+
+        /* TODO: strip all whitespace characters after the last non-whitespace character from cmd string */
+
         if(cmd.length > 0){
-            const c: number = CommandHandlerService.commands.map(function(c: Command) { return c.getCommand(); }).indexOf(cmd);
+            let commandName: string = this.getCommandName(cmd);
+            let commandArgs: string[] = this.getCommandArgs(cmd);
+            const c: number = CommandHandlerService.commands.map(function(c: Command) { return c.getCommand(); }).indexOf(commandName);
             if(c !== -1){
-                CommandHandlerService.commands[c].execute();
+                CommandHandlerService.commands[c].execute(commandArgs)
+                    .then(function(){
+                        terminalService.afterExecuteCommand();
+                    })
+                    .catch(function (error) {
+                        TerminalService.output(error);
+                        terminalService.afterExecuteCommand();
+                    });
             }else {
-                TerminalService.output('command \'' + cmd + '\' not found. For help use \'help\'.');
+                TerminalService.output(`command '${commandName}' not found. For help use 'help'`);
+                terminalService.afterExecuteCommand();
             }
-            this.terminalService.afterExecuteCommand();
         }
     }
 
@@ -47,5 +60,27 @@ export class CommandHandlerService {
         new reboot();
         new cat();
         new ls();
+    }
+
+    private getCommandName(cmd: string): string{
+        if(cmd.indexOf(" ") === -1){
+            return cmd;
+        }
+        return cmd.substring(0, cmd.indexOf(" "));
+    }
+
+    private getCommandArgs(cmd: string): string[]{
+        let args: string[] = [];
+
+        if(cmd.indexOf(" ") < 0) return args;
+
+        cmd = cmd.substring(cmd.indexOf(" ") + 1, cmd.length) + " ";
+
+        while (cmd.indexOf(" ") > -1){
+            args.push(cmd.substring(0, cmd.indexOf(" ")));
+            cmd = cmd.substring(cmd.indexOf(" ") + 1, cmd.length);
+        }
+
+        return args;
     }
 }

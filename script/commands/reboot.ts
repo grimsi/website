@@ -10,9 +10,12 @@ export class reboot implements Command {
         CommandHandlerService.registerCommand(this);
     }
 
-    public execute(): void {
-        TerminalService.output('System rebooting...');
-        location.reload();
+    public execute(args?: string[]): Promise<boolean> {
+        return new Promise(function (resolve) {
+            TerminalService.output('System rebooting...');
+            location.reload();
+            resolve();
+        });
     }
 
     public getCommand(): string {

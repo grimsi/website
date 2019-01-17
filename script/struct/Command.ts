@@ -1,7 +1,7 @@
 export interface Command {
     readonly command: string;
 
-    execute(): void;
+    execute(args?: string[]): Promise<boolean>;
 
     getCommand(): string;
 }

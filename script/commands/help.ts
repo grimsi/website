@@ -10,13 +10,16 @@ export class help implements Command {
         CommandHandlerService.registerCommand(this);
     }
 
-    public execute(): void {
-        let output: string = '';
-        output += 'List of known commands:\n';
-        CommandHandlerService.getAvailableCommands().forEach((c: Command) => {
-            output += c.getCommand() + '\n';
+    public execute(args?: string[]): Promise<boolean> {
+        return new Promise(function (resolve) {
+            let output: string = '';
+            output += 'List of known commands:\n';
+            CommandHandlerService.getAvailableCommands().forEach((c: Command) => {
+                output += c.getCommand() + '\n';
+            });
+            TerminalService.output(output);
+            resolve();
         });
-        TerminalService.output(output);
     }
 
     public getCommand(): string {

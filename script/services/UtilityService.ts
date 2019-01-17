@@ -18,4 +18,23 @@ export class UtilityService{
         });
         return table.substring(0, table.length - 1);
     }
+
+    public static async getResource(path: string): Promise<string>{
+
+        return new Promise<string>(function(resolve, reject){
+            let jsonFile = new XMLHttpRequest();
+            jsonFile.open("GET", path,true);
+            jsonFile.send();
+
+            jsonFile.onreadystatechange = function() {
+                if (jsonFile.readyState== 4 && jsonFile.status == 200) {
+                    resolve(jsonFile.responseText);
+                }
+                else if(jsonFile.readyState== 4 && jsonFile.status != 200){
+                    reject(`Error while loading resource "${path}": Code ${jsonFile.status}`);
+                }
+
+            };
+        });
+    }
 }

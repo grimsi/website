@@ -10,8 +10,11 @@ export class clear implements Command {
         CommandHandlerService.registerCommand(this);
     }
 
-    public execute(): void {
-        TerminalService.clearTerminal();
+    public execute(args?: string[]): Promise<boolean> {
+        return new Promise(function (resolve) {
+            TerminalService.clearTerminal();
+            resolve();
+        });
     }
 
     public getCommand(): string {
