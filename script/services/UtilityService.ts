@@ -1,3 +1,8 @@
+import {FileType} from "../enum/FileType";
+import {Folder} from "../dto/Folder";
+import {File} from "../dto/File";
+import {RootFolder} from "../dto/RootFolder";
+
 export class UtilityService{
 
     public static random(min: number, max:number, precision: number=0): number{
@@ -36,5 +41,22 @@ export class UtilityService{
 
             };
         });
+    }
+
+    public static convertStringToFileType(fileTypeString: string): FileType {
+        switch (fileTypeString) {
+            case "txt": return FileType.TXT;
+            case "jpg": return FileType.JPG;
+            case "png": return FileType.PNG;
+            case "md": return FileType.MD;
+            default: return FileType.UNKNOWN;
+        }
+    }
+
+    public static mapFileStructureToNames(files: Folder|RootFolder): string[] {
+        return files.getChildren().map((child: File|Folder) => {
+                if(child instanceof File) return `${child.name}.${child.getFileType()}`;
+                else return child.name;
+            });
     }
 }

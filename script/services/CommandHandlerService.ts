@@ -1,16 +1,17 @@
 import {TerminalService} from "./TerminalService";
-import {Command} from "../struct/Command";
+import {ICommand} from "../interfaces/ICommand";
 import {cat} from "../commands/cat";
 import {help} from "../commands/help";
 import {clear} from "../commands/clear";
 import {reboot} from "../commands/reboot";
 import {ls} from "../commands/ls";
+import {cd} from "../commands/cd";
 
 export class CommandHandlerService {
 
     private terminalService = new TerminalService();
 
-    private static commands: Command[] = [];
+    private static commands: ICommand[] = [];
 
     private static instance: CommandHandlerService;
 
@@ -24,12 +25,11 @@ export class CommandHandlerService {
     public executeCommand(cmd: string): void {
         let terminalService: TerminalService = this.terminalService;
 
-        /* TODO: strip all whitespace characters after the last non-whitespace character from cmd string */
-
         if(cmd.length > 0){
+            cmd = cmd.trim();
             let commandName: string = this.getCommandName(cmd);
             let commandArgs: string[] = this.getCommandArgs(cmd);
-            const c: number = CommandHandlerService.commands.map(function(c: Command) { return c.getCommand(); }).indexOf(commandName);
+            const c: number = CommandHandlerService.commands.map(function(c: ICommand) { return c.getCommand(); }).indexOf(commandName);
             if(c !== -1){
                 CommandHandlerService.commands[c].execute(commandArgs)
                     .then(function(){
@@ -46,11 +46,11 @@ export class CommandHandlerService {
         }
     }
 
-    public static registerCommand(command: Command){
+    public static registerCommand(command: ICommand){
         CommandHandlerService.commands.push(command);
     }
 
-    public static getAvailableCommands(): Command[]{
+    public static getAvailableCommands(): ICommand[]{
         return CommandHandlerService.commands;
     }
 
@@ -60,6 +60,7 @@ export class CommandHandlerService {
         new reboot();
         new cat();
         new ls();
+        new cd();
     }
 
     private getCommandName(cmd: string): string{

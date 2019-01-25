@@ -1,16 +1,16 @@
-import {Command} from "../struct/Command";
+import {ICommand} from "../interfaces/ICommand";
 import {TerminalService} from "../services/TerminalService";
 import {CommandHandlerService} from "../services/CommandHandlerService";
 
-export class reboot implements Command {
+export class reboot implements ICommand {
 
-    readonly command: string = 'reboot';
+    private readonly command: string = 'reboot';
 
     constructor() {
         CommandHandlerService.registerCommand(this);
     }
 
-    public execute(args?: string[]): Promise<boolean> {
+    public execute(args?: string[]): Promise<void> {
         return new Promise(function (resolve) {
             TerminalService.output('System rebooting...');
             location.reload();

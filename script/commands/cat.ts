@@ -1,27 +1,28 @@
-import {Command} from "../struct/Command";
+import {ICommand} from "../interfaces/ICommand";
 import {TerminalService} from "../services/TerminalService";
 import {CommandHandlerService} from "../services/CommandHandlerService";
 import {FilesystemService} from "../services/FilesystemService";
 
-export class cat implements Command {
+export class cat implements ICommand {
 
-    readonly command: string = 'cat';
+    private readonly command: string = 'cat';
 
     constructor() {
         CommandHandlerService.registerCommand(this);
     }
 
-    public execute(args?: string[]): Promise<boolean> {
+    public execute(args?: string[]): Promise<void> {
         return new Promise(function (resolve, reject) {
             if(args){
                 if(args.length === 1){
-                    FilesystemService.getTextFileContent(args[0])
+                    let filePath = FilesystemService.getVirtualAbsolutePath(FilesystemService.currentFolder) + "/" + args[0];
+                    FilesystemService.getFileContent(filePath)
                         .then(function(fileContent){
                             TerminalService.output(fileContent);
                             resolve();
                         })
                         .catch(function (error) {
-                            reject(`File "${args[0]}" could not be found.`);
+                            reject(`File "${FilesystemService.getVirtualAbsolutePath(FilesystemService.currentFolder)}/${args[0]}" could not be found.`);
                         });
                 }
                 else if(args.length === 0){

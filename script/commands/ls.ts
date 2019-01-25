@@ -1,28 +1,21 @@
-import {Command} from "../struct/Command";
+import {ICommand} from "../interfaces/ICommand";
 import {CommandHandlerService} from "../services/CommandHandlerService";
 import {TerminalService} from "../services/TerminalService";
 import {UtilityService} from "../services/UtilityService";
 import {FilesystemService} from "../services/FilesystemService";
+import {Folder} from "../dto/Folder";
+import {File} from "../dto/File";
 
-export class ls implements Command {
+export class ls implements ICommand {
 
-    readonly command: string = 'ls';
-
-    private filenames: string[] = [];
+    private readonly command: string = 'ls';
 
     constructor() {
         CommandHandlerService.registerCommand(this);
-        FilesystemService.getFiles()
-            .then((files: string[]) => {
-                this.filenames = files;
-            })
-            .catch((error: string) => {
-                console.error(error);
-            });
     }
 
-    public execute(args?: string[]): Promise<boolean> {
-        let filenames: string[] = this.filenames;
+    public execute(args?: string[]): Promise<void> {
+        let filenames: string[] = UtilityService.mapFileStructureToNames(FilesystemService.currentFolder);
 
         return new Promise(function (resolve) {
             TerminalService.output(UtilityService.formatStringsAsTable(filenames));

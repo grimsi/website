@@ -1,5 +1,6 @@
 import {KeyHandlerService} from "./KeyHandlerService";
 import {UtilityService} from "./UtilityService";
+import {FilesystemService} from "./FilesystemService";
 
 export class TerminalService {
 
@@ -55,7 +56,7 @@ export class TerminalService {
             newLineUsername.innerHTML = "<p>" +
                                         "<span style='color: lightblue'>user</span>" +
                                         "<span style='color: lightcoral'>@</span>" +
-                                        "<span style='color: lightgreen'>grimsi.de:</span>" +
+                                        "<span style='color: lightgreen'>grimsi.de" + FilesystemService.getVirtualAbsolutePath(FilesystemService.currentFolder) + ":</span>" +
                                         "<span style='color: lightpink'>~</span>" +
                                         "<span style='color: lightcoral'>$</span>" +
                                         " </p>";

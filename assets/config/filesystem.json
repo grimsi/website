@@ -1,1 +1,35 @@
-["hello.txt", "world.txt", "welcome.txt", "test.txt", "about_me.txt", "secret_msg.txt", "readme.txt"]
+{
+  "children": [
+    {
+      "name": "Folder_1",
+      "children": [
+        {
+          "name": "Folder_1_1",
+          "children": [
+            {
+              "name": "hello.txt"
+            },
+            {
+              "name": "test.txt"
+            }
+          ]
+        },
+        {
+          "name": "Folder_1_2",
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "Folder_2",
+      "children": []
+    },
+    {
+      "name": "Folder_3",
+      "children": []
+    },
+    {
+      "name": "hello.txt"
+    }
+  ]
+}

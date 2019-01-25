@@ -1,8 +1,8 @@
 import {Key} from "../enum/Key";
 
 export class KeyEvent{
-    private key: Key;
-    private action: Function;
+    private readonly key: Key;
+    private readonly action: Function;
 
     constructor(key: Key, event: Function){
         this.key = key;
