@@ -4,7 +4,7 @@ import {CommandHandlerService} from "../services/CommandHandlerService";
 
 export class help implements ICommand {
 
-    private readonly command: string = 'help';
+    private readonly command: string = help.name;
 
     constructor() {
         CommandHandlerService.registerCommand(this);

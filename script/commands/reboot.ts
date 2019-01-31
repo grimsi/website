@@ -5,7 +5,7 @@ import {UtilityService} from "../services/UtilityService";
 
 export class reboot implements ICommand {
 
-    private readonly command: string = 'reboot';
+    private readonly command: string = reboot.name;
 
     constructor() {
         CommandHandlerService.registerCommand(this);

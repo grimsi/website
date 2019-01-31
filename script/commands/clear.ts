@@ -4,7 +4,7 @@ import {CommandHandlerService} from "../services/CommandHandlerService";
 
 export class clear implements ICommand {
 
-    private readonly command: string = 'clear';
+    private readonly command: string = clear.name;
 
     constructor() {
         CommandHandlerService.registerCommand(this);

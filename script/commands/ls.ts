@@ -6,7 +6,7 @@ import {FilesystemService} from "../services/FilesystemService";
 
 export class ls implements ICommand {
 
-    private readonly command: string = 'ls';
+    private readonly command: string = ls.name;
 
     constructor() {
         CommandHandlerService.registerCommand(this);

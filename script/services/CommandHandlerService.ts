@@ -6,6 +6,8 @@ import {clear} from "../commands/clear";
 import {reboot} from "../commands/reboot";
 import {ls} from "../commands/ls";
 import {cd} from "../commands/cd";
+import {echo} from "../commands/echo";
+import {mkdir} from "../commands/mkdir";
 
 export class CommandHandlerService {
 
@@ -64,9 +66,11 @@ export class CommandHandlerService {
         new help();
         new clear();
         new reboot();
+        new echo();
         new cat();
         new ls();
         new cd();
+        new mkdir();
     }
 
     private getCommandName(cmd: string): string{
@@ -85,13 +89,13 @@ export class CommandHandlerService {
 
         cmd = cmd.substring(cmd.indexOf(" ") + 1, cmd.length) + " ";
 
-        /*while (cmd.indexOf(" ") > -1){
+        while (cmd.indexOf(" ") > -1){
             args.push(cmd.substring(0, cmd.indexOf(" ")));
             cmd = cmd.substring(cmd.indexOf(" ") + 1, cmd.length);
-        }*/
+        }
 
         /* get all indexes for delimiters in the command */
-        for(let i: number = 0; i<cmd.length; i++){
+        /*for(let i: number = 0; i<cmd.length; i++){
             let currentChar = cmd.charAt(i);
 
             switch(currentChar){
@@ -99,7 +103,7 @@ export class CommandHandlerService {
                 case `"`: quotMarkIndexes.push(i); break;
                 default: break;
             }
-        }
+        }*/
 
 
 

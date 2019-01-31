@@ -5,7 +5,7 @@ import {FilesystemService} from "../services/FilesystemService";
 
 export class cat implements ICommand {
 
-    private readonly command: string = 'cat';
+    private readonly command: string = cat.name;
 
     constructor() {
         CommandHandlerService.registerCommand(this);

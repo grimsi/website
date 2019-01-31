@@ -7,7 +7,7 @@ import {UtilityService} from "../services/UtilityService";
 
 export class cd implements ICommand {
 
-    private readonly command: string = 'cd';
+    private readonly command: string = cd.name;
 
     constructor() {
         CommandHandlerService.registerCommand(this);
