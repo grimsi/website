@@ -22,7 +22,7 @@ export class cat implements ICommand {
                             resolve();
                         })
                         .catch(function (error) {
-                            reject(`File "${FilesystemService.getVirtualAbsolutePath(FilesystemService.currentFolder)}/${args[0]}" could not be found.`);
+                            reject(`File ".${FilesystemService.getVirtualAbsolutePath(FilesystemService.currentFolder)}/${args[0]}" could not be found.`);
                         });
                 }
                 else if(args.length === 0){

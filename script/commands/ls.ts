@@ -3,8 +3,6 @@ import {CommandHandlerService} from "../services/CommandHandlerService";
 import {TerminalService} from "../services/TerminalService";
 import {UtilityService} from "../services/UtilityService";
 import {FilesystemService} from "../services/FilesystemService";
-import {Folder} from "../dto/Folder";
-import {File} from "../dto/File";
 
 export class ls implements ICommand {
 
@@ -15,12 +13,23 @@ export class ls implements ICommand {
     }
 
     public execute(args?: string[]): Promise<void> {
-        let filenames: string[] = UtilityService.mapFileStructureToNames(FilesystemService.currentFolder);
+        /* TODO: implement support for argument containing a absolute ("./{...}") / relative folder path */
+        if(!args || args.length < 1){
+            let filenames: string[] = UtilityService.mapFileStructureToNames(FilesystemService.currentFolder);
 
-        return new Promise(function (resolve) {
-            TerminalService.output(UtilityService.formatStringsAsTable(filenames));
-            resolve();
-        });
+            return new Promise(function (resolve) {
+                TerminalService.output(UtilityService.formatStringsAsTable(filenames));
+                resolve();
+            });
+        }
+        else {
+            let filenames: string[] = UtilityService.mapFileStructureToNames(FilesystemService.currentFolder);
+
+            return new Promise(function (resolve) {
+                TerminalService.output(UtilityService.formatStringsAsTable(filenames));
+                resolve();
+            });
+        }
     }
 
     public getCommand(): string {

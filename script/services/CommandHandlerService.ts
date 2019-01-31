@@ -28,7 +28,13 @@ export class CommandHandlerService {
         if(cmd.length > 0){
             cmd = cmd.trim();
             let commandName: string = this.getCommandName(cmd);
-            let commandArgs: string[] = this.getCommandArgs(cmd);
+            let commandArgs: string[] = [];
+            try{
+                commandArgs = this.getCommandArgs(cmd);
+            }
+            catch (e) {
+                TerminalService.output(e.message);
+            }
             const c: number = CommandHandlerService.commands.map(function(c: ICommand) { return c.getCommand(); }).indexOf(commandName);
             if(c !== -1){
                 CommandHandlerService.commands[c].execute(commandArgs)
@@ -72,15 +78,30 @@ export class CommandHandlerService {
 
     private getCommandArgs(cmd: string): string[]{
         let args: string[] = [];
+        let spaceIndexes: number[] = [];
+        let quotMarkIndexes: number[] = [];
 
         if(cmd.indexOf(" ") < 0) return args;
 
         cmd = cmd.substring(cmd.indexOf(" ") + 1, cmd.length) + " ";
 
-        while (cmd.indexOf(" ") > -1){
+        /*while (cmd.indexOf(" ") > -1){
             args.push(cmd.substring(0, cmd.indexOf(" ")));
             cmd = cmd.substring(cmd.indexOf(" ") + 1, cmd.length);
+        }*/
+
+        /* get all indexes for delimiters in the command */
+        for(let i: number = 0; i<cmd.length; i++){
+            let currentChar = cmd.charAt(i);
+
+            switch(currentChar){
+                case " ": spaceIndexes.push(i); break;
+                case `"`: quotMarkIndexes.push(i); break;
+                default: break;
+            }
         }
+
+
 
         return args;
     }

@@ -14,6 +14,7 @@ export class cd implements ICommand {
     }
 
     public execute(args?: string[]): Promise<void> {
+        /* TODO: implement support for argument containing a absolute ("./{...}") / relative folder path */
         return new Promise(function (resolve, reject) {
             if(args){
                 if(args.length === 1){

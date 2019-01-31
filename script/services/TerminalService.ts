@@ -86,7 +86,8 @@ export class TerminalService {
             this.getPerformanceString() +
             "\n" +
             "* Security for grimsi.de!\n" +
-            "We will soon support SSL!\n" +
+            "We now support SSL!\n" +
+            "All traffic to and from this site will now be encrypted.\n" +
             "\n" +
             "* This site is in the process of being reworked.\n" +
             "- please be patient\n" +
@@ -95,7 +96,6 @@ export class TerminalService {
             "0 updates and security updates available.\n" +
             "\n" +
             "\n" +
-            "*** system reboot required ***\n" +
             "Last login: " + this.getLastLoginDateString() + " from 87.187.34.178\n\n");
         this.appendInputLine();
     }
