@@ -18,6 +18,7 @@ export class FilesystemService {
 
     public static rootFolder: RootFolder = new RootFolder();
     public static currentFolder: Folder|RootFolder = FilesystemService.rootFolder;
+    private static currentVirtualFolder: Folder|RootFolder = FilesystemService.rootFolder;
 
     public static async initFileSystem(): Promise<void>{
         console.debug("Initializing filesystem...");
@@ -95,6 +96,19 @@ export class FilesystemService {
 
     public static changeDirectory(newDir: Folder|RootFolder): void {
         this.currentFolder = newDir;
+        this.currentVirtualFolder = newDir;
+    }
+
+    public static getCurrentVirtualDirectory(): Folder|RootFolder {
+        return this.currentVirtualFolder;
+    }
+
+    public static changeVirtualDirectory(newDir: Folder|RootFolder): void {
+        this.currentVirtualFolder = newDir;
+    }
+
+    public static resetVirtualDirectory(): void {
+        this.currentVirtualFolder = this.currentFolder;
     }
 
     private static async addNodesToFileSystemRecursive(currentNode: CFolder|CRootFolder, currentFolder: Folder|RootFolder): Promise<void> {

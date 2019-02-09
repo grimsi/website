@@ -17,15 +17,33 @@ export class cd implements ICommand {
 
     public execute(args?: string[]): Promise<void> {
         /* TODO: implement support for argument containing a absolute ("./{...}") / relative folder path */
-        return new Promise(function (resolve, reject) {
-            if(args){
-                if(args.length === 1){
-                    if(args[0] === ".."){
+
+        /* TODO: test the path by traversing it virtually and checking for errors */
+
+         let _this = this;
+        return new Promise(async function (resolve, reject) {
+            if(args) {
+                if(args.length === 1 && args[0] !== undefined) {
+                    let folderPath: string = args[0];
+                    if(folderPath.lastIndexOf("/") > -1) {
+                        let folderPathRest: string = folderPath.substring(0, folderPath.lastIndexOf("/"));
+                        folderPath = folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length);
+                        if(folderPathRest !== undefined && folderPathRest.length > 0){
+                            try {
+                                await _this.execute([folderPathRest]);
+                            }
+                            catch (e) {
+                                reject(e);
+                            }
+                        }
+                    }
+                    if(folderPath === ".."){
                         FilesystemService.changeDirectory(FilesystemService.currentFolder.getParent());
                         resolve();
                     }
+
                     let folderNames = UtilityService.mapFileStructureToNames(FilesystemService.currentFolder);
-                    let folderIndex: number = folderNames.indexOf(args[0]);
+                    let folderIndex: number = folderNames.indexOf(folderPath);
                     if(folderIndex > -1) {
                         let folder: Folder = <Folder> FilesystemService.currentFolder.getChildren()[folderIndex];
                         if(folder instanceof Folder){
@@ -33,13 +51,13 @@ export class cd implements ICommand {
                             resolve();
                         }
                     }
-                    reject(`Folder ".${FilesystemService.getVirtualAbsolutePath(FilesystemService.currentFolder)}/${args[0]}" could not be found.`);
+                    reject(`Folder ".${FilesystemService.getVirtualAbsolutePath(FilesystemService.currentFolder)}/${folderPath}" could not be found.`);
                 }
-                else if(args.length === 0){
+                else if(args.length === 0) {
                     TerminalService.output("Please define a folder to be opened.");
                     resolve();
                 }
-                else if(args.length > 1){
+                else if(args.length > 1) {
                     TerminalService.output("This command only accepts one argument.");
                     resolve();
                 }
