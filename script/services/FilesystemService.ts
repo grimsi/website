@@ -13,7 +13,8 @@ export class FilesystemService {
     static readonly configFilePath: string = "config";
     static readonly configFileName: string = "filesystem.json";
 
-    static readonly reservedNamesAndChars: string[] = ["..", "/"];
+    static readonly reservedNames: string[] = [".."];
+    static readonly reservedChars: string[] = ["/"];
 
     public static rootFolder: RootFolder = new RootFolder();
     public static currentFolder: Folder|RootFolder = FilesystemService.rootFolder;
@@ -44,13 +45,17 @@ export class FilesystemService {
     public static checkForInvalidName(files: (File|Folder)[], fileToBeChecked: File|Folder): void  {
 
         let child: File|Folder;
-
+        /* check if object is folder and if yes, check if name is reserved */
+        if(fileToBeChecked instanceof Folder && this.reservedNames.indexOf(fileToBeChecked.name) > -1){
+            throw new Error(`Reserved name: "${fileToBeChecked.name}".`);
+        }
+        this.reservedChars.forEach((s: string) => {
+            if(fileToBeChecked.name.indexOf(s) > 0) {
+                throw new Error(`Name "${fileToBeChecked.name}" contains illegal character ${s}.`);
+            }
+        });
         for(let i: number = 0; i < files.length; i++){
             child = files[i];
-            /* check if object is folder and if yes, check if name is reserved */
-            if(child instanceof Folder && this.reservedNamesAndChars.indexOf(child.name) > -1){
-                throw new Error(`Reserved name: "${fileToBeChecked.name}".`);
-            }
             /* check if object has same name, filetype (in case of file) and type as existing object */
             if(typeof child === typeof fileToBeChecked && child.name === fileToBeChecked.name){
                 if(fileToBeChecked instanceof Folder){
