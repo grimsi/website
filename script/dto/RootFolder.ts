@@ -7,14 +7,7 @@ export class RootFolder implements IFolder{
     private children: (File|Folder)[] = [];
 
     public addChild(childToBeAdded: File|Folder): (File|Folder)[] {
-        try {
-            FilesystemService.checkForInvalidName(this.children, childToBeAdded);
-        }
-        catch (e) {
-            console.error(e);
-            return this.children;
-        }
-
+        FilesystemService.checkForInvalidName(this.children, childToBeAdded);
         this.children.push(childToBeAdded);
         return this.children;
     }

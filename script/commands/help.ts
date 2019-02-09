@@ -1,10 +1,13 @@
 import {ICommand} from "../interfaces/ICommand";
 import {TerminalService} from "../services/TerminalService";
 import {CommandHandlerService} from "../services/CommandHandlerService";
+import {UtilityService} from "../services/UtilityService";
 
 export class help implements ICommand {
 
     private readonly command: string = help.name;
+
+    private readonly description = "displays a list with known commands including a short description";
 
     constructor() {
         CommandHandlerService.registerCommand(this);
@@ -12,17 +15,23 @@ export class help implements ICommand {
 
     public execute(args?: string[]): Promise<void> {
         return new Promise(function (resolve) {
-            let output: string = '';
-            output += 'List of known commands:\n';
+            let commands: string[] = [];
+
+            TerminalService.output('List of known commands:\n');
             CommandHandlerService.getAvailableCommands().forEach((c: ICommand) => {
-                output += c.getCommand() + '\n';
+                commands.push(c.getCommand());
+                commands.push(c.getDescription());
             });
-            TerminalService.output(output);
+            TerminalService.outputHTML(UtilityService.formatStringsAsTable(commands, 2));
             resolve();
         });
     }
 
     public getCommand(): string {
         return this.command;
+    }
+
+    public getDescription(): string {
+        return this.description;
     }
 }

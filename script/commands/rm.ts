@@ -1,48 +1,40 @@
 import {ICommand} from "../interfaces/ICommand";
-import {TerminalService} from "../services/TerminalService";
 import {CommandHandlerService} from "../services/CommandHandlerService";
 import {FilesystemService} from "../services/FilesystemService";
 import {Folder} from "../dto/Folder";
 import {UtilityService} from "../services/UtilityService";
 
-export class cd implements ICommand {
+export class rm implements ICommand {
 
-    private readonly command: string = cd.name;
+    private readonly command: string = rm.name;
 
-    private readonly description = "changes to a directory with given name";
+    private readonly description = "removes a directory with given name";
 
     constructor() {
         CommandHandlerService.registerCommand(this);
     }
 
     public execute(args?: string[]): Promise<void> {
-        /* TODO: implement support for argument containing a absolute ("./{...}") / relative folder path */
         return new Promise(function (resolve, reject) {
             if(args){
-                if(args.length === 1){
-                    if(args[0] === ".."){
-                        FilesystemService.changeDirectory(FilesystemService.currentFolder.getParent());
-                        resolve();
-                    }
+                if(args.length == 1){
                     let folderNames = UtilityService.mapFileStructureToNames(FilesystemService.currentFolder);
                     let folderIndex: number = folderNames.indexOf(args[0]);
                     if(folderIndex > -1) {
                         let folder: Folder = <Folder> FilesystemService.currentFolder.getChildren()[folderIndex];
                         if(folder instanceof Folder){
-                            FilesystemService.changeDirectory(folder);
+                            folder.delete();
                             resolve();
                         }
                     }
                     reject(`Folder ".${FilesystemService.getVirtualAbsolutePath(FilesystemService.currentFolder)}/${args[0]}" could not be found.`);
                 }
-                else if(args.length === 0){
-                    TerminalService.output("Please define a folder to be opened.");
-                    resolve();
+                else {
+                    reject("This command only accepts one argument");
                 }
-                else if(args.length > 1){
-                    TerminalService.output("This command only accepts one argument.");
-                    resolve();
-                }
+            }
+            else {
+                reject("Please specify the name of the folder that you want to remove.");
             }
         });
     }

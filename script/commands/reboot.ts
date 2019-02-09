@@ -7,6 +7,8 @@ export class reboot implements ICommand {
 
     private readonly command: string = reboot.name;
 
+    private readonly description = "reboots the terminal (reloads the site)";
+
     constructor() {
         CommandHandlerService.registerCommand(this);
     }
@@ -23,5 +25,9 @@ export class reboot implements ICommand {
 
     public getCommand(): string {
         return this.command;
+    }
+
+    public getDescription(): string {
+        return this.description;
     }
 }

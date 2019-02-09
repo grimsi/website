@@ -8,6 +8,7 @@ import {ls} from "../commands/ls";
 import {cd} from "../commands/cd";
 import {echo} from "../commands/echo";
 import {mkdir} from "../commands/mkdir";
+import {rm} from "../commands/rm";
 
 export class CommandHandlerService {
 
@@ -44,7 +45,7 @@ export class CommandHandlerService {
                         terminalService.afterExecuteCommand();
                     })
                     .catch(function (error) {
-                        TerminalService.output(error);
+                        TerminalService.outputError(error);
                         terminalService.afterExecuteCommand();
                     });
             }else {
@@ -71,6 +72,7 @@ export class CommandHandlerService {
         new ls();
         new cd();
         new mkdir();
+        new rm();
     }
 
     private getCommandName(cmd: string): string{
@@ -82,30 +84,41 @@ export class CommandHandlerService {
 
     private getCommandArgs(cmd: string): string[]{
         let args: string[] = [];
-        let spaceIndexes: number[] = [];
-        let quotMarkIndexes: number[] = [];
+        let ignoreWhitespaces: boolean = false;
 
         if(cmd.indexOf(" ") < 0) return args;
 
-        cmd = cmd.substring(cmd.indexOf(" ") + 1, cmd.length) + " ";
+        /* remove command from cmd string  */
+        cmd = cmd.substring(cmd.indexOf(" ") + 1, cmd.length).trim();
 
-        while (cmd.indexOf(" ") > -1){
-            args.push(cmd.substring(0, cmd.indexOf(" ")));
-            cmd = cmd.substring(cmd.indexOf(" ") + 1, cmd.length);
-        }
-
-        /* get all indexes for delimiters in the command */
-        /*for(let i: number = 0; i<cmd.length; i++){
-            let currentChar = cmd.charAt(i);
-
-            switch(currentChar){
-                case " ": spaceIndexes.push(i); break;
-                case `"`: quotMarkIndexes.push(i); break;
-                default: break;
+        for(let i: number = 0; i < cmd.length; i++) {
+            let char: string = cmd.charAt(i);
+            switch(cmd.charAt(i)){
+                case `"`:
+                    if(cmd.charAt(i - 1) !== '\\'){
+                        ignoreWhitespaces = !ignoreWhitespaces;
+                        /* remove the '"' */
+                        cmd = cmd.slice(0, i) + cmd.slice(i + 1, cmd.length);
+                    }
+                    else {
+                        /* remove the '\' */
+                        cmd = cmd.slice(0, i - 1) + cmd.slice(i, cmd.length);
+                    }
+                    i--;
+                    break;
+                case ' ':
+                    if(!ignoreWhitespaces){
+                        args.push(cmd.substring(0, i));
+                        cmd = cmd.substring(i , cmd.length).trim();
+                        i = -1;
+                    }
+                    break;
+                default:
+                    break;
             }
-        }*/
-
-
+        }
+        /* push the last argument that's left */
+        args.push(cmd);
 
         return args;
     }

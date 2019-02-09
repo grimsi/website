@@ -7,6 +7,8 @@ export class mkdir implements ICommand {
 
     private readonly command: string = mkdir.name;
 
+    private readonly description = "creates a subdirectory with a given name";
+
     constructor() {
         CommandHandlerService.registerCommand(this);
     }
@@ -15,8 +17,13 @@ export class mkdir implements ICommand {
         return new Promise(function (resolve, reject) {
             if(args){
                 if(args.length == 1){
-                    new Folder(args[0], FilesystemService.currentFolder);
-                    resolve();
+                    try{
+                        new Folder(args[0], FilesystemService.currentFolder);
+                        resolve();
+                    }
+                    catch (e) {
+                        reject(e.message);
+                    }
                 }
                 else {
                     reject("This command only accepts one argument");
@@ -30,5 +37,9 @@ export class mkdir implements ICommand {
 
     public getCommand(): string {
         return this.command;
+    }
+
+    public getDescription(): string {
+        return this.description;
     }
 }

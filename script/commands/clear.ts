@@ -6,6 +6,8 @@ export class clear implements ICommand {
 
     private readonly command: string = clear.name;
 
+    private readonly description = "clears the terminal output";
+
     constructor() {
         CommandHandlerService.registerCommand(this);
     }
@@ -19,5 +21,9 @@ export class clear implements ICommand {
 
     public getCommand(): string {
         return this.command;
+    }
+
+    public getDescription(): string {
+        return this.description;
     }
 }

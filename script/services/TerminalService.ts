@@ -18,10 +18,21 @@ export class TerminalService {
         TerminalService.instance = this;
     }
 
-    public static output(outputText: string): void {
-        const newContent = document.createElement('p');
+    public static output(outputText: string, style?: {[key: string]: Object}): void {
+        const newContent: HTMLParagraphElement = document.createElement('p');
         newContent.innerText = outputText;
+        if(style) UtilityService.applyStyleToElement(newContent, style);
         if(TerminalService.terminal) TerminalService.terminal.appendChild(newContent);
+    }
+
+    public static outputHTML(element: HTMLElement): void {
+        if(TerminalService.terminal) TerminalService.terminal.appendChild(element);
+    }
+
+    public static outputError(outputText: string): void {
+        const errorStyle: {[key: string]: Object} = {};
+        errorStyle.color = "red";
+        TerminalService.output(outputText, errorStyle);
     }
 
     public static clearTerminal(): void {
@@ -56,8 +67,8 @@ export class TerminalService {
             newLineUsername.innerHTML = "<p>" +
                                         "<span style='color: lightblue'>user</span>" +
                                         "<span style='color: lightcoral'>@</span>" +
-                                        "<span style='color: lightgreen'>grimsi.de" + FilesystemService.getVirtualAbsolutePath(FilesystemService.currentFolder) + ":</span>" +
-                                        "<span style='color: lightpink'>~</span>" +
+                                        "<span style='color: lightgreen'>grimsi.de:</span>" +
+                                        "<span style='color: mediumpurple'>~" + FilesystemService.getVirtualAbsolutePath(FilesystemService.currentFolder) + "</span>" +
                                         "<span style='color: lightcoral'>$</span>" +
                                         " </p>";
 

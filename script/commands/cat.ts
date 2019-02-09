@@ -7,6 +7,8 @@ export class cat implements ICommand {
 
     private readonly command: string = cat.name;
 
+    private readonly description = "outputs text files to the terminal";
+
     constructor() {
         CommandHandlerService.registerCommand(this);
     }
@@ -39,5 +41,9 @@ export class cat implements ICommand {
 
     public getCommand(): string {
         return this.command;
+    }
+
+    public getDescription(): string {
+        return this.description;
     }
 }
