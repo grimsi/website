@@ -14,18 +14,21 @@ export class cat implements ICommand {
     }
 
     public execute(args?: string[]): Promise<void> {
-        return new Promise(function (resolve, reject) {
+        return new Promise(async function (resolve, reject) {
             if(args){
                 if(args.length === 1){
                     let filePath = FilesystemService.getVirtualAbsolutePath(FilesystemService.getCurrentFolder()) + "/" + args[0];
-                    FilesystemService.getFileContent(filePath)
-                        .then(function(fileContent){
-                            TerminalService.output(fileContent);
-                            resolve();
-                        })
-                        .catch(function (error) {
-                            reject(`File ".${FilesystemService.getVirtualAbsolutePath(FilesystemService.getCurrentFolder())}/${args[0]}" could not be found.`);
-                        });
+                    try{
+                        let fileText: string = await FilesystemService.getFileContent(filePath);
+                        let fileContentFormatted = document.createElement("p");
+                        fileContentFormatted.innerText = fileText;
+                        fileContentFormatted.setAttribute("class", "textOutputNotFullscreen");
+                        TerminalService.outputHTML(fileContentFormatted);
+                        resolve();
+                    }
+                    catch (e) {
+                        reject(e.message);
+                    }
                 }
                 else if(args.length === 0){
                     TerminalService.output("please define a file to be opened.");

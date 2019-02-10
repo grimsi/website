@@ -1,0 +1,25 @@
+Hello there.
+
+I am Simon. I am about 20 years old and I like programming stuff.
+
+I'm currently working at Deutsche Telekom as a dual student, which means that im working and studying at the same time.
+I'm studying applied informatics (angewandte Informatik) at Hochschule für Telekommunikation Leipzig.
+
+I am a full-stack developer, which means that I'm bad at frontend and backend development. I also try to learn how to be a software architect.
+I can write bad websites like this in vanilla Typescript (but who tf uses this in a commercial application) and Angular (even Angular.js, although plain JS sucks).
+I also pretend to know Java Spring, Spring Boot and Spring Cloud but let's be honest, it's just all about finding that right annotation and let "Spring magic" handle the rest (even though I am exerting a lot of effort to find the ultimate "@DoWhatIWant" annotation I have not been successful yet).
+Also I know a few things about Microsoft Azure (read as: I can click buttons to create resources and can google the right things if I don't know something, but that's basically what I do with everything).
+My personal interests are software architecture (especially scalable architecture) and machine learning ("import tensorflow as tf").
+
+I absolutely hate Javascript. Honestly, who tf came up with this shit, it's not even funny (single threaded by design and no type safety???). But I like TypeScript a lot because it fixes almost all issues I have with JS.
+
+When I'm not programming stuff or googling how to program stuff I am a voluntary firefighter. Also I like playing video games. And watching Netflix. Sometimes I do it at the same time. Honestly, I should get a life, this Netflix thingy is eating up too much time.
+
+
+You can find me here:
+
+private GitLab: https://gitlab.zeus-coding.de/grimsi
+GitHub: https://github.com/grimsi
+Xing: https://www.xing.com/profile/Simon_Grimme
+
+If you have any questions, feel free to contact me on one of these sites. I will try my best to ignore you.

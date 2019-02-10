@@ -31,7 +31,12 @@ export class FilesystemService {
     }
 
     public static async getFileContent(filePath: string): Promise<string>{
-        return await UtilityService.getResource(`./${this.basePath}/${filePath}`);
+        try{
+            return await UtilityService.getResource(`./${this.basePath}/${filePath}`);
+        }
+        catch (e) {
+            throw new Error(`File ".${FilesystemService.getVirtualAbsolutePath(FilesystemService.getCurrentFolder())}/${filePath}" could not be found.`);
+        }
     }
 
     public static getFile(fileName: string, folder: Folder|RootFolder = this.currentFolder): File{

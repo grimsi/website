@@ -1,35 +1,24 @@
 {
   "children": [
     {
-      "name": "Folder_1",
+      "name": "about_me.txt"
+    },
+    {
+      "name": "about_this_site.txt"
+    },
+    {
+      "name": "thirdpartylicenses",
       "children": [
         {
-          "name": "Folder_1_1",
-          "children": [
-            {
-              "name": "hello.txt"
-            },
-            {
-              "name": "test.txt"
-            }
-          ]
+          "name": "crt_filter_css.txt"
         },
         {
-          "name": "Folder_1_2",
-          "children": []
+          "name": "requirejs.txt"
         }
       ]
     },
     {
-      "name": "Folder_2",
-      "children": []
-    },
-    {
-      "name": "Folder_3",
-      "children": []
-    },
-    {
-      "name": "hello.txt"
+      "name": "license.txt"
     }
   ]
 }

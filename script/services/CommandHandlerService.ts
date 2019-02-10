@@ -9,6 +9,7 @@ import {cd} from "../commands/cd";
 import {echo} from "../commands/echo";
 import {mkdir} from "../commands/mkdir";
 import {rm} from "../commands/rm";
+import {whoami} from "../commands/whoami";
 
 export class CommandHandlerService {
 
@@ -49,7 +50,7 @@ export class CommandHandlerService {
                         terminalService.afterExecuteCommand();
                     });
             }else {
-                TerminalService.output(`command '${commandName}' not found. For help use 'help'`);
+                TerminalService.outputError(`Command '${commandName}' not found. For help use 'help'`);
                 terminalService.afterExecuteCommand();
             }
         }
@@ -67,6 +68,7 @@ export class CommandHandlerService {
         new help();
         new clear();
         new reboot();
+        new whoami();
         new echo();
         new cat();
         new ls();

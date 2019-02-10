@@ -1,0 +1,9 @@
+You may wonder what this site is about.
+
+Primarily it's used as a personal software project of mine. I just wanted to build a web application from the ground up without using heavy frameworks like Angular, React.js or vue.js.
+All of the code is written by me without the use of a bazillion redundant libraries (exceptions are listed in the "thirdpartylicenses" folder) so don't be surprised if it's full of anti patterns, bugs and code smells.
+
+But I also use this site to represent myself on this new thing called "internet". Dunno if it will gain popularity one day, but I'm optimistic.
+
+Feel free to play around and be a unpaid tester for me, because I'm to lazy to write tests for this project (bad practice, I know, but this is just a personal playground).
+If you encounter bugs you can contact me (see "about_me.txt" for more details). Maybe i'll give you a cookie. But just a virtual cookie, I ain't rich.

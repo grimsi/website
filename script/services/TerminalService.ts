@@ -72,6 +72,8 @@ export class TerminalService {
                                         "<span style='color: lightcoral'>$</span>" +
                                         " </p>";
 
+            newLineUsername.setAttribute("style", "white-space: pre;");
+
             this.keyHandlerService.addEventListener(newLineInput);
             newLineInput.id = "command_" + this.commandCount;
             newLineInput.className= 'commandInput';
@@ -91,7 +93,8 @@ export class TerminalService {
     }
 
     public printWelcomeScreen(): void {
-        TerminalService.output("Welcome to grimsi.de 1.0.0 LTS (grimsiOS™ 4.15.0-39-stable x86_64)\n" +
+        let performanceOverview = document.createElement("p");
+        performanceOverview.innerText = "Welcome to grimsi.de 1.0.0 LTS (grimsiOS™ 4.15.0-39-stable x86_64)\n" +
             "System information as of " + this.getCurrentDateString() + "\n" +
             "\n" +
             this.getPerformanceString() +
@@ -107,7 +110,9 @@ export class TerminalService {
             "0 updates and security updates available.\n" +
             "\n" +
             "\n" +
-            "Last login: " + this.getLastLoginDateString() + " from 87.187.34.178\n\n");
+            "Last login: " + this.getLastLoginDateString() + " from 87.187.34.178\n\n";
+        performanceOverview.setAttribute("style", "white-space: pre;");
+        TerminalService.outputHTML(performanceOverview);
         this.appendInputLine();
     }
 

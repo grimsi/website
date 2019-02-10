@@ -22,6 +22,11 @@ input {
   flex-grow: 1;
 }
 
+.textOutputNotFullscreen {
+  width: 100%;
+  max-width: 750px;
+}
+
 p{
   margin: 0;
   padding: 0;

@@ -11,6 +11,10 @@ html, body {
   font-size: 14px;
 }
 
+a {
+  color: #aaaaaa;
+}
+
 .crt {
   position: fixed;
   top: 0;
@@ -26,7 +30,7 @@ html, body {
 #terminal{
   padding: 10px;
   font-family: "Courier New", monospace;
-  white-space: pre;
+  max-width: 100%;
 }
 
 #bootscreen{
