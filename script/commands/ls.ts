@@ -18,18 +18,33 @@ export class ls implements ICommand {
     }
 
     public execute(args?: string[]): Promise<void> {
-        /* TODO: implement support for argument containing a absolute ("./{...}") / relative folder path */
-        let enableColors:boolean = false;
+        let _this = this;
+        return new Promise(function (resolve, reject) {
+            let enableColors:boolean = false;
 
-        if(args && args.length > 0 && args.indexOf("--color") > -1) {
-            /* remove the flag from the argument list since it will be processed now */
-            args.splice(args.indexOf("--color"), 1);
-            enableColors = true;
-        }
+            if(args && args.length > 0 && args.indexOf("--color") > -1) {
+                /* remove the flag from the argument list since it will be processed now */
+                args.splice(args.indexOf("--color"), 1);
+                enableColors = true;
+            }
 
-        let filenames: string[] = this.getFileNamesStyled(FilesystemService.currentFolder, enableColors);
+            let folder = FilesystemService.getCurrentFolder();
 
-        return new Promise(function (resolve) {
+            if(args && args[0]){
+                try{
+                    FilesystemService.changeDirectoryByPath(args[0], true);
+                    folder = FilesystemService.getCurrentFolder(true);
+                }
+                catch (e) {
+                    reject(e.message);
+                }
+                finally {
+                    FilesystemService.resetVirtualDirectory();
+                }
+            }
+
+            let filenames: string[] = _this.getFileNamesStyled(folder, enableColors);
+
             TerminalService.outputHTML(UtilityService.formatStringsAsTable(filenames));
             resolve();
         });

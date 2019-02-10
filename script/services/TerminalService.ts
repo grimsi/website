@@ -68,7 +68,7 @@ export class TerminalService {
                                         "<span style='color: lightblue'>user</span>" +
                                         "<span style='color: lightcoral'>@</span>" +
                                         "<span style='color: lightgreen'>grimsi.de:</span>" +
-                                        "<span style='color: mediumpurple'>~" + FilesystemService.getVirtualAbsolutePath(FilesystemService.currentFolder) + "</span>" +
+                                        "<span style='color: mediumpurple'>~" + FilesystemService.getVirtualAbsolutePath(FilesystemService.getCurrentFolder()) + "</span>" +
                                         "<span style='color: lightcoral'>$</span>" +
                                         " </p>";
 

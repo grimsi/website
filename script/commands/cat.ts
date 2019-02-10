@@ -17,14 +17,14 @@ export class cat implements ICommand {
         return new Promise(function (resolve, reject) {
             if(args){
                 if(args.length === 1){
-                    let filePath = FilesystemService.getVirtualAbsolutePath(FilesystemService.currentFolder) + "/" + args[0];
+                    let filePath = FilesystemService.getVirtualAbsolutePath(FilesystemService.getCurrentFolder()) + "/" + args[0];
                     FilesystemService.getFileContent(filePath)
                         .then(function(fileContent){
                             TerminalService.output(fileContent);
                             resolve();
                         })
                         .catch(function (error) {
-                            reject(`File ".${FilesystemService.getVirtualAbsolutePath(FilesystemService.currentFolder)}/${args[0]}" could not be found.`);
+                            reject(`File ".${FilesystemService.getVirtualAbsolutePath(FilesystemService.getCurrentFolder())}/${args[0]}" could not be found.`);
                         });
                 }
                 else if(args.length === 0){

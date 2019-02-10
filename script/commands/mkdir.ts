@@ -18,7 +18,7 @@ export class mkdir implements ICommand {
             if(args){
                 if(args.length == 1){
                     try{
-                        new Folder(args[0], FilesystemService.currentFolder);
+                        new Folder(args[0], FilesystemService.getCurrentFolder());
                         resolve();
                     }
                     catch (e) {

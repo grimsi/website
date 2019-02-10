@@ -2,7 +2,6 @@ import {ICommand} from "../interfaces/ICommand";
 import {CommandHandlerService} from "../services/CommandHandlerService";
 import {FilesystemService} from "../services/FilesystemService";
 import {Folder} from "../dto/Folder";
-import {UtilityService} from "../services/UtilityService";
 
 export class rm implements ICommand {
 
@@ -16,18 +15,20 @@ export class rm implements ICommand {
 
     public execute(args?: string[]): Promise<void> {
         return new Promise(function (resolve, reject) {
-            if(args){
+            if(args && args.length > 0){
                 if(args.length == 1){
-                    let folderNames = UtilityService.mapFileStructureToNames(FilesystemService.currentFolder);
-                    let folderIndex: number = folderNames.indexOf(args[0]);
-                    if(folderIndex > -1) {
-                        let folder: Folder = <Folder> FilesystemService.currentFolder.getChildren()[folderIndex];
-                        if(folder instanceof Folder){
-                            folder.delete();
-                            resolve();
-                        }
+                    try{
+                        FilesystemService.changeDirectoryByPath(args[0], true);
+                        let folder: Folder = <Folder> FilesystemService.getCurrentFolder(true);
+                        folder.delete();
+                        resolve();
                     }
-                    reject(`Folder ".${FilesystemService.getVirtualAbsolutePath(FilesystemService.currentFolder)}/${args[0]}" could not be found.`);
+                    catch (e) {
+                        reject(e.message);
+                    }
+                    finally {
+                        FilesystemService.resetVirtualDirectory();
+                    }
                 }
                 else {
                     reject("This command only accepts one argument");

@@ -17,7 +17,7 @@ export class FilesystemService {
     static readonly reservedChars: string[] = ["/"];
 
     public static rootFolder: RootFolder = new RootFolder();
-    public static currentFolder: Folder|RootFolder = FilesystemService.rootFolder;
+    private static currentFolder: Folder|RootFolder = FilesystemService.rootFolder;
     private static currentVirtualFolder: Folder|RootFolder = FilesystemService.rootFolder;
 
     public static async initFileSystem(): Promise<void>{
@@ -94,21 +94,63 @@ export class FilesystemService {
         return FilesystemService.basePath + virtualPath;
     }
 
-    public static changeDirectory(newDir: Folder|RootFolder): void {
-        this.currentFolder = newDir;
+    public static changeDirectory(newDir: Folder|RootFolder, virtual: boolean = false): void {
+        if(!virtual) this.currentFolder = newDir;
         this.currentVirtualFolder = newDir;
     }
 
-    public static getCurrentVirtualDirectory(): Folder|RootFolder {
-        return this.currentVirtualFolder;
+    /**
+     * Changes to a directory by given relative or absolute path
+     */
+    public static changeDirectoryByPath(folderPath: string, virtual: boolean = false): void {
+        if(folderPath.length === 0) return;
+        if(folderPath.lastIndexOf("/") > -1) {
+            let folderPathRest: string = folderPath.substring(0, folderPath.lastIndexOf("/"));
+            folderPath = folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length);
+            if(folderPathRest !== undefined && folderPathRest.length > 0){
+                FilesystemService.changeDirectoryByPath(folderPathRest, virtual);
+            }
+        }
+        FilesystemService.changeDirectoryByName(folderPath, virtual);
+        return;
     }
 
-    public static changeVirtualDirectory(newDir: Folder|RootFolder): void {
-        this.currentVirtualFolder = newDir;
+    /**
+     * Changes to a subdirectory by name (does not accept paths)
+     */
+    public static changeDirectoryByName(folderName: string, virtual: boolean = false): void {
+        if(folderName.indexOf("/") > -1) throw new Error("This function does not accept paths.");
+        if(folderName === ".."){
+            FilesystemService.changeDirectory(FilesystemService.getCurrentFolder(virtual).getParent(), virtual);
+            return;
+        }
+        let folderNames = UtilityService.mapFileStructureToNames(FilesystemService.getCurrentFolder(virtual));
+        let folderIndex: number = folderNames.indexOf(folderName);
+        if(folderIndex > -1) {
+            let folder: Folder = <Folder> FilesystemService.getCurrentFolder(virtual).getChildren()[folderIndex];
+            if(folder instanceof Folder){
+                FilesystemService.changeDirectory(folder, virtual);
+                return;
+            }
+        }
+        throw new Error(`Folder ".${FilesystemService.getVirtualAbsolutePath(FilesystemService.getCurrentFolder(virtual))}/${folderName}" could not be found.`);
+    }
+
+    public static getCurrentFolder(virtual: boolean = false): Folder|RootFolder {
+        if(!virtual){
+            return this.currentFolder;
+        }
+        else {
+            return this.currentVirtualFolder;
+        }
     }
 
     public static resetVirtualDirectory(): void {
         this.currentVirtualFolder = this.currentFolder;
+    }
+
+    public static overwriteRealWithVirtualDirectory(): void {
+        this.currentFolder = this.currentVirtualFolder;
     }
 
     private static async addNodesToFileSystemRecursive(currentNode: CFolder|CRootFolder, currentFolder: Folder|RootFolder): Promise<void> {
